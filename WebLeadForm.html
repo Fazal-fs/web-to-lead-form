@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Web-to-Lead Form with Dynamic Record Types</title>
+  <style>
+    .record-type-buttons {
+      margin-bottom: 20px;
+    }
+    .form-section {
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+    }
+  </style>
+  <script>
+    function showFormSection(recordType) {
+      // Hide both sections
+      document.getElementById('individual-section').classList.remove('active');
+      document.getElementById('corporate-section').classList.remove('active');
+      
+      // Show the selected section
+      if (recordType === 'Individual') {
+        document.getElementById('individual-section').classList.add('active');
+      } else if (recordType === 'Corporate') {
+        document.getElementById('corporate-section').classList.add('active');
+      }
+    }
+
+    function handleSubmit(event) {
+      const activeSection = document.querySelector('.form-section.active');
+      if (!activeSection) {
+        event.preventDefault();
+        alert('Please select a record type first.');
+      }
+    }
+  </script>
+</head>
+<body>
+
+<h1>Lead Form</h1>
+
+<!-- Record Type Selection Buttons -->
+<div class="record-type-buttons">
+  <button type="button" onclick="showFormSection('Individual')">Create Individual Lead</button>
+  <button type="button" onclick="showFormSection('Corporate')">Create Corporate Lead</button>
+</div>
+
+<!-- Salesforce Web-to-Lead Form -->
+<form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5g00000JRHCY" method="POST" onsubmit="handleSubmit(event)">
+  <input type="hidden" name="oid" value="00D5g00000JRHCY">
+  <input type="hidden" name="retURL" value="https://login.salesforce.com/?locale=in">
+
+  <!-- Individual Lead Section -->
+  <div id="individual-section" class="form-section">
+    <h2>Individual Lead</h2>
+    <label for="first_name">First Name</label><input id="first_name" name="first_name" maxlength="40" size="20" type="text" /><br>
+
+    <label for="last_name">Last Name</label><input id="last_name" name="last_name" maxlength="80" size="20" type="text" /><br>
+
+    <label for="email">Email</label><input id="email" name="email" maxlength="80" size="20" type="text" /><br>
+
+    <label for="phone">Phone</label><input id="phone" name="phone" maxlength="40" size="20" type="text" /><br>
+
+    <label for="passport_no">Passport No.</label><input id="passport_no" name="00NJ1000000elMC" maxlength="8" size="20" type="text" /><br>
+
+    <label for="nationality">Nationality</label>
+    <select id="nationality" name="00NJ1000000elM7" title="Nationality">
+      <option value="">--None--</option>
+      <option value="India">India</option>
+      <option value="UAE">UAE</option>
+      <option value="Saudi Arabia">Saudi Arabia</option>
+      <option value="USA">USA</option>
+      <option value="UK">UK</option>
+      <option value="Australia">Australia</option>
+    </select><br>
+  </div>
+
+  <!-- Corporate Lead Section -->
+  <div id="corporate-section" class="form-section">
+    <h2>Corporate Lead</h2>
+    <label for="company">Company</label><input id="company" name="company" maxlength="40" size="20" type="text" /><br>
+
+    <label for="city">City</label><input id="city" name="city" maxlength="40" size="20" type="text" /><br>
+
+    <label for="state">State/Province</label><input id="state" name="state" maxlength="20" size="20" type="text" /><br>
+
+    <label for="phone">Phone</label><input id="phone" name="phone" maxlength="40" size="20" type="text" /><br>
+
+    <label for="registration_place">Registration Place</label><input id="registration_place" name="00NJ1000000eoSh" maxlength="50" size="20" type="text" /><br>
+
+    <label for="registration_no">Registration No.</label><input id="registration_no" name="00NJ1000000eoSc" maxlength="25" size="20" type="text" /><br>
+
+    <label for="contact_person_name">Contact Person Name</label><input id="contact_person_name" name="00NJ1000000eoSX" maxlength="25" size="20" type="text" /><br>
+
+    <label for="contact_no">Contact No.</label><input id="contact_no" name="00NJ1000000eoSS" maxlength="40" size="20" type="text" /><br>
+
+    <label for="organization_name">Organization Name</label><input id="organization_name" name="00NJ1000000eoSN" maxlength="25" size="20" type="text" /><br>
+  </div>
+
+  <br>
+  <input type="submit" name="submit" value="Submit Lead">
+</form>
+
+</body>
+</html>
